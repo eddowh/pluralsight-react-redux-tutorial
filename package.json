@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server --config webpack.config.dev.js"
+    "dev": "NODE_ENV=development node tools/dev-server.js",
+    "dev:wds": "NODE_ENV=development webpack-dev-server --config webpack.config.dev.js"
   },
   "author": "Eddo W. Hintoso",
   "license": "Unlicense",
@@ -14,6 +15,9 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "browser-sync": "^2.13.0",
+    "connect-history-api-fallback": "^1.2.0",
+    "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",
     "react-hot-loader": "^1.3.0",
     "redux-immutable-state-invariant": "^1.2.3",

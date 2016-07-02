@@ -1,13 +1,16 @@
 const webpack = require('webpack');
 const path    = require('path');
 
+// 3rd party webpack plugins
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 // Path variables
 const ROOT_PATH = path.resolve(__dirname)
 const PATHS = {
   root    : ROOT_PATH,
   src     : path.join(ROOT_PATH, 'src'),
   modules : path.join(ROOT_PATH, 'node_modules'),
-  dest    : path.join(ROOT_PATH, 'static')
+  dest    : path.join(ROOT_PATH, 'dist'),
 }
 
 
@@ -32,12 +35,13 @@ module.exports = {
 
   output: {
     path: PATHS.dest,
-    filename: path.join('js', 'bundle.js'),
+    filename: path.join('static', 'bundle.js'),
+    publicPath: '/',
   },
 
   devServer: {
     colors: true,
-    contentBase: PATHS.dest,
+    contentBase: PATHS.src,
     historyApiFallback: true,
     inline: true,
     hot: true,
@@ -48,6 +52,14 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(PATHS.src, 'static'),
+        to: path.join(PATHS.dest, 'static'),
+      },
+    ], {
+      copyUnmodified: true,
+    }),
   ],
 
   module: {
