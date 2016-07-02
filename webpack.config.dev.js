@@ -7,7 +7,7 @@ const PATHS = {
   root    : ROOT_PATH,
   src     : path.join(ROOT_PATH, 'src'),
   modules : path.join(ROOT_PATH, 'node_modules'),
-  dest    : path.join(ROOT_PATH, 'dist')
+  dest    : path.join(ROOT_PATH, 'static')
 }
 
 
@@ -16,9 +16,16 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   noInfo: false,
 
+  resolve: {
+    modulesDirectories: [
+      PATHS.modules,
+      PATHS.src,
+    ],
+  },
+
   entry: [
     'webpack-hot-middleware/client?reload=true', // reloads if hmr fails
-    path.join(PATHS.src, 'index.js')
+    path.join(PATHS.src, 'index.js'),
   ],
 
   target: 'web',
@@ -26,19 +33,19 @@ module.exports = {
   output: {
     path: PATHS.dest,
     filename: path.join('js', 'bundle.js'),
-    publicPath: '/static/'
   },
 
   devServer: {
     colors: true,
+    contentBase: PATHS.dest,
     inline: true,
     hot: true,
-    port: 3000
+    port: 3000,
   },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
   ],
 
   module: {
@@ -47,8 +54,8 @@ module.exports = {
         test: /\.js$/,
         include: PATHS.src,
         loaders: [
-          'babel'
-        ]
+          'babel',
+        ],
       }
     ]
   }
