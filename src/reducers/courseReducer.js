@@ -12,7 +12,7 @@ export default function courseReducer(state = initialState, action) {
     case types.CREATE_USER:
       return [
         ...state,
-        Object.assign({}, action.couse),
+        Object.assign({}, action.course),
       ]
 
     default:
