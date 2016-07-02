@@ -38,6 +38,7 @@ module.exports = {
   devServer: {
     colors: true,
     contentBase: PATHS.dest,
+    historyApiFallback: true,
     inline: true,
     hot: true,
     port: 3000,
