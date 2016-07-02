@@ -54,10 +54,12 @@ module.exports = {
       {
         test: /\.js$/,
         include: PATHS.src,
-        loaders: [
-          'babel',
-        ],
-      }
+        loaders: ['babel'],
+      },
+      {
+        test: /(\.css)$/,
+        loaders: ['style', 'css'],
+      },
     ]
   }
 };
