@@ -2,6 +2,9 @@
  * src/constants/ActionTypes.js
  */
 
+
+export const BEGIN_AJAX_CALL = 'BEGIN_AJAX_CALL';
+
 export const LOAD_COURSES_SUCCESS  = 'LOAD_COURSES_SUCCESS';
 export const SAVE_COURSE_SUCCESS   = 'SAVE_COURSES_SUCCESS';
 export const UPDATE_COURSE_SUCCESS = 'UPDATE_COURSES_SUCCESS';
