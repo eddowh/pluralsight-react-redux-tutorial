@@ -4,8 +4,8 @@
  *
  * -- ManageCoursePage
  *    -- CourseForm
- *       -- TextInput
- *       -- SelectInput
+ *       -- (common) TextInput
+ *       -- (common) SelectInput
  */
 
 import React, {Component, PropTypes} from 'react';
@@ -25,15 +25,32 @@ class ManageCoursePage extends Component {
       course: Object.assign({}, this.props.course),
       errors: {}
     };
+
+    this.updateCourseState = this.updateCourseState.bind(this);
+    this.saveCourse = this.saveCourse.bind(this);
+  }
+
+  updateCourseState(event) {
+    const field = event.target.name;
+    let course = this.state.course;
+    course[field] = event.target.value;
+    return this.setState({
+      course: course
+    });
+  }
+
+  saveCourse(event) {
+    event.preventDefault();
+    this.props.actions.saveCourse(this.state.course);
   }
 
   render() {
-    const {course} = this.props;
-
     return (
       <div>
         <CourseForm
-          allAuthors={[]}
+          allAuthors={this.props.authors}
+          onChange={this.updateCourseState}
+          onSave={this.saveCourse}
           course={this.state.course}
           errors={this.state.errors}
         />
@@ -43,6 +60,9 @@ class ManageCoursePage extends Component {
 }
 
 ManageCoursePage.propTypes = {
+  course: PropTypes.object.isRequired,
+  authors: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 let mapStateToProps = (state, ownProps) => {
@@ -54,8 +74,15 @@ let mapStateToProps = (state, ownProps) => {
     length: '',
     category: '',
   };
+  const dropdownAuthors = state.authors.map(author => {
+    return {
+      value: author.id,
+      text: `${author.firstName} ${author.lastName}`,
+    };
+  });
   return {
-    course: course
+    course: course,
+    authors: dropdownAuthors,
   };
 }
 
