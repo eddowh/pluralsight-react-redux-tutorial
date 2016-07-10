@@ -13,7 +13,7 @@ function stringEndsWith(string, trailingString) {
 export default function ajaxStatusReducer(state = states.NUM_AJAX_CALLS_IN_PROGRESS, action) {
   if (action.type == types.BEGIN_AJAX_CALL) {
     return state + 1;
-  } else if (stringEndsWith(action.type, '_SUCCESS')) {
+  } else if (action.type === types.AJAX_CALL_ERROR || stringEndsWith(action.type, '_SUCCESS')) {
     return state - 1;
   }
 
