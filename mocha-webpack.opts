@@ -1,5 +1,4 @@
 --colors
---full-trace
 --webpack-config webpack.config.test.js
 --reporter spec
 --require source-map-support/register
