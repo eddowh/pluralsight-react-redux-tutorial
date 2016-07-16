@@ -1,18 +1,7 @@
-/**
- * src/store/configureStore.js
- */
+switch (process.env.NODE_ENV) {
+  case 'production':
+    module.exports = require('./configureStore.prod');
 
-import {createStore, applyMiddleware} from 'redux';
-import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
-import thunk from 'redux-thunk';
-
-import rootReducer from 'reducers';
-
-
-export default function configureStore(initialState) {
-  return createStore(
-    rootReducer,
-    initialState,
-    applyMiddleware(thunk, reduxImmutableStateInvariant())
-  );
+  default:
+    module.exports = require('./configureStore.dev');
 }

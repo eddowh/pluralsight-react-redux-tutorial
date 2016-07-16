@@ -13,10 +13,13 @@ const PATHS = {
   dest    : path.join(ROOT_PATH, 'dist'),
 }
 
+const GLOBALS = {
+  'process.env.NODE_ENV': JSON.stringify('production'),
+};
 
 module.exports = {
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   noInfo: false,
 
   resolve: {
@@ -27,7 +30,6 @@ module.exports = {
   },
 
   entry: [
-    'webpack-hot-middleware/client?reload=true', // reloads if hmr fails
     path.join(PATHS.src, 'index.js'),
   ],
 
@@ -41,17 +43,14 @@ module.exports = {
 
   devServer: {
     colors: true,
-    contentBase: PATHS.src,
+    contentBase: PATHS.dest,
     historyApiFallback: true,
-    inline: true,
-    hot: true,
     port: 3000,
   },
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin(GLOBALS),
     new CopyWebpackPlugin([
       {
         from: path.join(PATHS.src, 'index.html'),
@@ -64,6 +63,8 @@ module.exports = {
     ], {
       copyUnmodified: true,
     }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
   ],
 
   module: {
